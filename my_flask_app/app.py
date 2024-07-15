@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 # Load the pre-trained model
 model = joblib.load('model/model_pipeline.pkl')
+print(model)
 
 # Render the home page
 @app.route('/')
@@ -15,35 +16,43 @@ def home():
 # Handle the form submission and predict
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get the form data
-    form_data = request.form.to_dict()
-    
-    # Prepare the data for prediction
-    new_data = pd.DataFrame({
-        'age': [form_data['age']],
-        'sex': [form_data['sex']],
-        'cp': [form_data['cp']],
-        'trtbps': [form_data['trtbps']],
-        'chol': [form_data['chol']],
-        'fbs': [form_data['fbs']],
-        'restecg': [form_data['restecg']],
-        'thalach': [form_data['thalach']],
-        'exng': [form_data['exng']],
-        'oldpeak': [form_data['oldpeak']],
-        'slope': [form_data['slope']],
-        'ca': [form_data['ca']],
-        'thal': [form_data['thal']],
-        'output': [form_data['output']]
-    })
+    try:
+        # Get the form data
+        form_data = request.form.to_dict()
 
-    # Make prediction
-    prediction = model.predict(new_data)
-    
-    # Decode the prediction
-    prediction_label = 'Less chance of heart attack ' if prediction[0] == 1 else 'More chance of heart attack'
+        # Debug: Print the form data
+        print("Form Data:", form_data)
+        
+        # Prepare the data for prediction
+        new_data = pd.DataFrame({
+            'age': [int(form_data['age'])],
+            'sex': [int(form_data['sex'])],
+            'cp': [int(form_data['cp'])],
+            'trtbps': [int(form_data['trtbps'])],
+            'chol': [int(form_data['chol'])],
+            'fbs': [int(form_data['fbs'])],
+            'restecg': [int(form_data['restecg'])],
+            'thalachh': [int(form_data['thalachh'])],
+            'exng': [int(form_data['exng'])],
+            'oldpeak': [float(form_data['oldpeak'])],
+            'slp': [int(form_data['slp'])],
+            'caa': [int(form_data['caa'])],
+            'thall': [int(form_data['thall'])]
+        })
 
-    # Render the result page with prediction
-    return render_template('result.html', prediction=prediction_label)
+        # Debug: Print the DataFrame
+        print("DataFrame Columns:", new_data.columns)
+
+        # Make prediction
+        prediction = model.predict(new_data)
+        
+        # Decode the prediction
+        prediction_label = 'Less chance of heart attack' if prediction[0] == 1 else 'More chance of heart attack'
+
+        # Render the result page with prediction
+        return render_template('result.html', prediction=prediction_label)
+    except KeyError as e:
+        return f"Missing form data for: {e.args[0]}", 400
 
 if __name__ == '__main__':
     app.run(debug=True)

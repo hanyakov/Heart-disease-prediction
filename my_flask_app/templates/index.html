@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart Disease Prediction</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
@@ -18,17 +18,17 @@
             <label for="sex">Sex</label>
             <select id="sex" name="sex" required>
                 <option value="">Select ..</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="1">Male</option>
+                <option value="0">Female</option>
             </select><br><br>
 
             <label for="cp">Chest Pain</label>
             <select id="cp" name="cp" required>
                 <option value="">Select ..</option>
-                <option value="typical_angina">Typical Angina</option>
-                <option value="atypical_angina">Atypical Angina</option>
-                <option value="non_aginal">Non-Anginal Pain</option>
-                <option value="asymp">Asymptomatic</option>
+                <option value="0">Typical Angina</option>
+                <option value="1">Atypical Angina</option>
+                <option value="2">Non-Anginal Pain</option>
+                <option value="3">Asymptomatic</option>
             </select><br><br>
 
             <label for="trtbps">Resting Blood Pressure (mm Hg)</label>
@@ -40,65 +40,61 @@
             <label for="fbs">Fasting Blood Sugar > 120 mg/dl</label>
             <select id="fbs" name="fbs" required>
                 <option value="">Select ..</option>
-                <option value="fbs_high">Higher than 120 mg/dl</option>
-                <option value="fbs_low">Lower than 120 mg/dl</option>
+                <option value="1">Higher than 120 mg/dl</option>
+                <option value="0">Lower than 120 mg/dl</option>
             </select><br><br>
 
             <label for="restecg">Resting Electrocardiographic Results</label>
             <select id="restecg" name="restecg" required>
                 <option value="">Select ..</option>
-                <option value="normal">Normal</option>
-                <option value="abnormal">Having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV)</option>
-                <option value="hypertrophy">Showing probable or definite left ventricular hypertrophy by Estes' criteria</option>
+                <option value="0">Normal</option>
+                <option value="1">Having ST-T wave abnormality (T wave inversions and/or ST elevation or depression of > 0.05 mV)</option>
+                <option value="2">Showing probable or definite left ventricular hypertrophy by Estes' criteria</option>
             </select><br><br>
 
-            <label for="thalach">Maximum Heart Rate Achieved</label>
-            <input type="number" id="thalach" name="thalach" required><br><br>
-            </select><br><br>
+            <label for="thalachh">Maximum Heart Rate Achieved</label>
+            <input type="number" id="thalachh" name="thalachh" required><br><br>
 
             <label for="exng">Exercise Induced Angina</label>
             <select id="exng" name="exng" required>
                 <option value="">Select ..</option>
-                <option value="pain">Pain</option>
-                <option value="nopain">No Pain</option>
+                <option value="1">Pain</option>
+                <option value="0">No Pain</option>
             </select><br><br>
 
             <label for="oldpeak">ST Depression induced by exercise relative to rest</label>
-            <select id="oldpeak" name="oldpeak" required>
+            <input type="number" id="oldpeak" name="oldpeak" required><br><br>
+
+
+            <label for="slp">Slope of the Peak Exercise ST segment</label>
+            <select id="slp" name="slp" required>
                 <option value="">Select ..</option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
             </select><br><br>
 
-            <label for="slope">Slope of the Peak Exercise ST segment</label>
-            <select id="slope" name="slope" required>
+            <label for="caa">Number of major vessels colored by Fluoroscopy</label>
+            <select id="caa" name="caa" required>
                 <option value="">Select ..</option>
-                <option value=""></option>
-                <option value=""></option>
-                <option value=""></option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+
             </select><br><br>
 
-            <label for="ca">Number of major vessels colored by Fluoroscopy</label>
-            <select id="ca" name="ca" required>
-                <option value="">Select ..</option>
-                <option value="zero">0</option>
-                <option value="one">1</option>
-                <option value="two">2</option>
-                <option value="three">3</option>
+            <label for="thall">Duration of the Exercise Test</label>
+            <select name="thall" id="thall" required>
+                <option value="0">Normal</option>
+                <option value="1">Fixed Defect</option>
+                <option value="2">Reversible Defect</option>
             </select><br><br>
-
-            <label for="thal">Duration of the Exercise Test</label>
-        <select id="ca" name="ca" required>
-            <option value="">Select ..</option>
-            <option value="one">1</option>
-            <option value="two">2</option>
-            <option value="three">3</option>
-        </select><br><br>
-
             <input type="submit" value="Predict">
         </form>
     </div>
+
 </body>
 
 </html>
