@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import joblib
 import pandas as pd
 
@@ -49,10 +49,11 @@ def predict():
         # Decode the prediction
         prediction_label = 'Less chance of heart attack' if prediction[0] == 1 else 'More chance of heart attack'
 
-        # Render the result page with prediction
-        return render_template('result.html', prediction=prediction_label)
+# Return prediction as JSON
+        return jsonify({'result': prediction_label})
+    
     except KeyError as e:
-        return f"Missing form data for: {e.args[0]}", 400
+        return jsonify({'error': f"Missing form data for: {e.args[0]}"})
 
 if __name__ == '__main__':
     app.run(debug=True)

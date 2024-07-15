@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <h1>Heart Disease Prediction</h1>
-        <form action="/predict" method="post">
+        <form id="predictionForm" action="/predict" method="post">
             <label for="age">Age</label>
             <input type="number" id="age" name="age" required><br><br>
 
@@ -93,8 +93,41 @@
             </select><br><br>
             <input type="submit" value="Predict">
         </form>
+
+        <dialog id="resultDialog">
+            <h2>Prediction Result</h2>
+            <p id="predictionResult"></p>
+            <button id="closeDialog">Close</button>
+        </dialog>
     </div>
 
 </body>
+<script>
+    const form = document.getElementById('predictionForm');
+    const resultDialog = document.getElementById('resultDialog');
+    const predictionResult = document.getElementById('predictionResult');
+    const closeDialogBtn = document.getElementById('closeDialog');
 
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const response = await fetch('/predict', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            predictionResult.textContent = result.result;
+            resultDialog.showModal();
+        } else {
+            alert('Failed to get prediction result.');
+        }
+    });
+
+    closeDialogBtn.addEventListener('click', () => {
+        resultDialog.close();
+    });
+</script>
 </html>
